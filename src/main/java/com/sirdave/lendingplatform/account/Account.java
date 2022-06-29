@@ -16,8 +16,8 @@ public class Account {
     @Column(nullable = false, updatable = false)
     private int id;
 
-    private Double currentAmount;
-    private Double maxLoanCredit;
+    private double currentAmount;
+    private double maxLoanCredit;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
