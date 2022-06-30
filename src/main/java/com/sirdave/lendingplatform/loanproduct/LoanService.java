@@ -7,4 +7,6 @@ public interface LoanService {
     void saveProduct(LoanProduct product);
 
     List<LoanProduct> getAllProducts();
+
+    List<LoanProduct> getLoanOffersByAmount(double amount);
 }
