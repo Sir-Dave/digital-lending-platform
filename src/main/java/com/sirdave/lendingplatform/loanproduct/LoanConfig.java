@@ -10,7 +10,7 @@ import java.util.List;
 public class LoanConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(LoanService loanService){
+    CommandLineRunner commandLineRunner(LoanProductService loanProductService){
         return args -> {
 
             LoanProduct productA = new LoanProduct("Product A",
@@ -20,11 +20,11 @@ public class LoanConfig {
                     25000, 0.125, 30
             );
 
-            List<LoanProduct> loanProductList = loanService.getAllProducts();
+            List<LoanProduct> loanProductList = loanProductService.getAllProducts();
 
             if (loanProductList.isEmpty()){
-                loanService.saveProduct(productA);
-                loanService.saveProduct(productB);
+                loanProductService.saveProduct(productA);
+                loanProductService.saveProduct(productB);
             }
         };
     }

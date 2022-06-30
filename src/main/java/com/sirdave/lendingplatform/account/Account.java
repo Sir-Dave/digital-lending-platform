@@ -1,8 +1,11 @@
 package com.sirdave.lendingplatform.account;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sirdave.lendingplatform.loanrequest.LoanRequest;
 import com.sirdave.lendingplatform.user.User;
 import lombok.*;
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
@@ -22,6 +25,10 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    Set<LoanRequest> loanRequestSet;
 
     public Account(double currentAmount, double maxLoanCredit, User user) {
         this.currentAmount = currentAmount;
