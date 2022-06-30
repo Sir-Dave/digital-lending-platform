@@ -32,6 +32,7 @@ public class User {
     private boolean isVerified;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Account account;
 
     public User(String firstname, String lastname, String email,

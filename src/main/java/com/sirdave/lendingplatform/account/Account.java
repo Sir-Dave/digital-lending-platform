@@ -23,4 +23,9 @@ public class Account {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    public Account(double currentAmount, double maxLoanCredit, User user) {
+        this.currentAmount = currentAmount;
+        this.maxLoanCredit = maxLoanCredit;
+        this.user = user;
+    }
 }
