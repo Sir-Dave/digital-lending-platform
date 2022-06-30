@@ -93,6 +93,11 @@ public class CustomExceptionHandler implements ErrorController {
         return createHttpResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
+    @ExceptionHandler(AccountException.class)
+    public ResponseEntity<HttpResponse> accountException(AccountException exception){
+        return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     @RequestMapping(ERROR_PATH)
     public ResponseEntity<HttpResponse> notFound404(){
         return createHttpResponse(HttpStatus.NOT_FOUND, "No mapping found for this url");
