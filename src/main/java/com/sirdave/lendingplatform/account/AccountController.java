@@ -2,6 +2,7 @@ package com.sirdave.lendingplatform.account;
 
 import com.sirdave.lendingplatform.exception.AccountException;
 import com.sirdave.lendingplatform.exception.AccountNotFoundException;
+import com.sirdave.lendingplatform.exception.MaxCreditExceededException;
 import com.sirdave.lendingplatform.loanproduct.LoanProduct;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class AccountController {
 
     @PostMapping("/request-loan")
     public ResponseEntity<Account> requestLoan(@RequestParam int loanProductId,
-                                               @RequestParam int accountId) throws AccountException, AccountNotFoundException {
+                                               @RequestParam int accountId) throws AccountException, AccountNotFoundException, MaxCreditExceededException {
         Account account = accountService.chooseLoanOffer(loanProductId, accountId);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }

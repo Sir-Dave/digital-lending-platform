@@ -93,6 +93,11 @@ public class CustomExceptionHandler implements ErrorController {
         return createHttpResponse(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 
+    @ExceptionHandler(MaxCreditExceededException.class)
+    public ResponseEntity<HttpResponse> maximumCreditLimitExceededException(MaxCreditExceededException exception){
+        return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(AccountException.class)
     public ResponseEntity<HttpResponse> accountException(AccountException exception){
         return createHttpResponse(HttpStatus.BAD_REQUEST, exception.getMessage());

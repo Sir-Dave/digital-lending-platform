@@ -2,6 +2,7 @@ package com.sirdave.lendingplatform.account;
 
 import com.sirdave.lendingplatform.exception.AccountException;
 import com.sirdave.lendingplatform.exception.AccountNotFoundException;
+import com.sirdave.lendingplatform.exception.MaxCreditExceededException;
 import com.sirdave.lendingplatform.loanproduct.LoanProduct;
 import com.sirdave.lendingplatform.user.User;
 import java.util.List;
@@ -19,6 +20,6 @@ public interface AccountService {
 
     List<LoanProduct> getLoanOffers(int accountId) throws AccountException, AccountNotFoundException;
 
-    Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException;
+    Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException, MaxCreditExceededException;
 
 }

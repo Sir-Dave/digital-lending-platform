@@ -2,6 +2,7 @@ package com.sirdave.lendingplatform.account;
 
 import com.sirdave.lendingplatform.exception.AccountException;
 import com.sirdave.lendingplatform.exception.AccountNotFoundException;
+import com.sirdave.lendingplatform.exception.MaxCreditExceededException;
 import com.sirdave.lendingplatform.loanproduct.LoanProduct;
 import com.sirdave.lendingplatform.loanproduct.LoanProductService;
 import com.sirdave.lendingplatform.loanrequest.LoanRequest;
@@ -74,16 +75,21 @@ public class AccountServiceImpl implements AccountService{
 
     @Transactional
     @Override
-    public Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException {
+    public Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException, MaxCreditExceededException {
         Account account = findAccountById(accountId);
         LoanProduct product = loanProductService.findOneProductById(loanProductId);
-        loanRequestService.requestLoan(account, product);
 
-        // Now credit the account with the new amount requested using the loan product
+        // Get the new amount requested using the loan product
         double amount = account.getCurrentAmount();
         double credit = product.getMaxAmountAllowable();
 
         double newAmount = amount + credit;
+
+        if (newAmount > account.getMaxLoanCredit())
+            throw new MaxCreditExceededException("Cannot process loan, maximum credit limit has been exceeded");
+
+        // else update the current amount in the account
+        loanRequestService.requestLoan(account, product);
 
         account.setCurrentAmount(newAmount);
         return account;
