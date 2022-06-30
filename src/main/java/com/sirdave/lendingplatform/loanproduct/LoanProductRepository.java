@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LoanRepository extends JpaRepository<LoanProduct, Integer> {
+public interface LoanProductRepository extends JpaRepository<LoanProduct, Integer> {
 
     @Query("SELECT l FROM LoanProduct l WHERE l.maxAmountAllowable <= :amount")
     List<LoanProduct> getLoanOffersByAmount(@Param("amount") double amount);
