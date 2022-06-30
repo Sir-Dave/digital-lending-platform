@@ -1,5 +1,6 @@
 package com.sirdave.lendingplatform.user;
 
+import com.sirdave.lendingplatform.account.AccountService;
 import com.sirdave.lendingplatform.exception.PasswordsDoNotMatchException;
 import com.sirdave.lendingplatform.exception.UserExistsException;
 import com.sirdave.lendingplatform.exception.UserNotFoundException;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private final UserRepository userRepository;
+    private final AccountService accountService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -54,9 +56,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = new User(firstname, lastname, email,
                 phoneNumber, encodedPassword, LocalDate.now(),
                 Role.ROLE_USER.name(), Role.ROLE_USER.getAuthorities(),
-                true, true, false);
+                true, true);
 
-        return userRepository.save(user);
+        userRepository.save(user);
+        accountService.createNewAccount(user);
+        return user;
     }
 
 

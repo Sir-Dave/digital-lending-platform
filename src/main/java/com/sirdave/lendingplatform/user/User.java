@@ -29,7 +29,6 @@ public class User {
     private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
-    private boolean isVerified;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
@@ -37,8 +36,8 @@ public class User {
 
     public User(String firstname, String lastname, String email,
                 String phoneNumber, String password, LocalDate dateJoined,
-                String role, String[] authorities, boolean isActive,
-                boolean isNotLocked, boolean isVerified){
+                String role, String[] authorities,
+                boolean isActive, boolean isNotLocked){
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -49,6 +48,5 @@ public class User {
         this.authorities = authorities;
         this.isActive = isActive;
         this.isNotLocked = isNotLocked;
-        this.isVerified = isVerified;
     }
 }
