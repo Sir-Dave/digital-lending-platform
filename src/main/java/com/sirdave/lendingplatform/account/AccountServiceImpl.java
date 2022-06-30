@@ -3,7 +3,9 @@ package com.sirdave.lendingplatform.account;
 import com.sirdave.lendingplatform.exception.AccountException;
 import com.sirdave.lendingplatform.exception.AccountNotFoundException;
 import com.sirdave.lendingplatform.loanproduct.LoanProduct;
-import com.sirdave.lendingplatform.loanproduct.LoanService;
+import com.sirdave.lendingplatform.loanproduct.LoanProductService;
+import com.sirdave.lendingplatform.loanrequest.LoanRequest;
+import com.sirdave.lendingplatform.loanrequest.LoanRequestService;
 import com.sirdave.lendingplatform.user.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,8 @@ public class AccountServiceImpl implements AccountService{
 
     @Autowired
     private final AccountRepository repository;
-    private final LoanService loanService;
+    private final LoanProductService loanProductService;
+    private final LoanRequestService loanRequestService;
 
     @Override
     public Account findAccountById(int id) throws AccountNotFoundException, AccountException {
@@ -66,6 +69,23 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public List<LoanProduct> getLoanOffers(int accountId) throws AccountException, AccountNotFoundException {
         Account account = findAccountById(accountId);
-        return loanService.getLoanOffersByAmount(account.getMaxLoanCredit());
+        return loanProductService.getLoanOffersByAmount(account.getMaxLoanCredit());
+    }
+
+    @Transactional
+    @Override
+    public Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException {
+        Account account = findAccountById(accountId);
+        LoanProduct product = loanProductService.findOneProductById(loanProductId);
+        loanRequestService.requestLoan(account, product);
+
+        // Now credit the account with the new amount requested using the loan product
+        double amount = account.getCurrentAmount();
+        double credit = product.getMaxAmountAllowable();
+
+        double newAmount = amount + credit;
+
+        account.setCurrentAmount(newAmount);
+        return account;
     }
 }

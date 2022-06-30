@@ -19,4 +19,6 @@ public interface AccountService {
 
     List<LoanProduct> getLoanOffers(int accountId) throws AccountException, AccountNotFoundException;
 
+    Account chooseLoanOffer(int loanProductId, int accountId) throws AccountException, AccountNotFoundException;
+
 }

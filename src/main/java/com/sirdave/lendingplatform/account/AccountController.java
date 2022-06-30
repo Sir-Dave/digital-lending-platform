@@ -30,5 +30,10 @@ public class AccountController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-
+    @PostMapping("/request-loan")
+    public ResponseEntity<Account> requestLoan(@RequestParam int loanProductId,
+                                               @RequestParam int accountId) throws AccountException, AccountNotFoundException {
+        Account account = accountService.chooseLoanOffer(loanProductId, accountId);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 }
