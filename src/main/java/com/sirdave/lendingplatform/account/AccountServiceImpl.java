@@ -22,9 +22,9 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Account createNewAccount(User user) {
+    public void createNewAccount(User user) {
         Account account = new Account(0, 10000, user);
-        return repository.save(account);
+        repository.save(account);
     }
 
     @Override

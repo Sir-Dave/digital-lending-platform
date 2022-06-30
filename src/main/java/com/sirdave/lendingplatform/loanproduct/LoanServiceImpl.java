@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class LoanServiceImpl implements LoanService{
@@ -14,5 +16,10 @@ public class LoanServiceImpl implements LoanService{
     @Override
     public void saveProduct(LoanProduct product) {
         repository.save(product);
+    }
+
+    @Override
+    public List<LoanProduct> getAllProducts() {
+        return repository.findAll();
     }
 }

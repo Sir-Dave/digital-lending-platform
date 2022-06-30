@@ -7,7 +7,7 @@ public interface AccountService {
 
     Account findAccountById(int id) throws AccountNotFoundException;
 
-    Account createNewAccount(User user);
+    void createNewAccount(User user);
 
     Account updateAccountDetails(int accountId, double amount, double maxLoanCredit)
             throws AccountNotFoundException;

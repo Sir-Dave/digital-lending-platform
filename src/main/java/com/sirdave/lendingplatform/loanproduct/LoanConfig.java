@@ -4,6 +4,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class LoanConfig {
 
@@ -18,8 +20,12 @@ public class LoanConfig {
                     25000, 0.125, 30
             );
 
-            loanService.saveProduct(productA);
-            loanService.saveProduct(productB);
+            List<LoanProduct> loanProductList = loanService.getAllProducts();
+
+            if (loanProductList.isEmpty()){
+                loanService.saveProduct(productA);
+                loanService.saveProduct(productB);
+            }
         };
     }
 }
