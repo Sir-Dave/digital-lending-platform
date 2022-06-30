@@ -18,7 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = {"/", "/user"})
+@RequestMapping(path = {"/user"})
 @AllArgsConstructor
 public class UserController {
 
