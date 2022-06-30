@@ -51,12 +51,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    private ResponseEntity<HttpResponse> response(HttpStatus httpStatus, String message){
-        HttpResponse response = new HttpResponse(httpStatus.value(), httpStatus,
-                httpStatus.getReasonPhrase().toUpperCase(), message.toUpperCase());
-        return new ResponseEntity<>(response, httpStatus);
-    }
-
     private HttpHeaders getJwtHeader(UserPrincipal userPrincipal){
         HttpHeaders headers = new HttpHeaders();
         headers.add(SecurityConstants.JWT_TOKEN_HEADER,
