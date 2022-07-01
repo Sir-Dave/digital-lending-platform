@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                          String email, String phoneNumber,
                          String password, String confirmPassword) throws PasswordsDoNotMatchException, UserExistsException {
 
-        validateUser(email);
+        validateUser(email, phoneNumber);
         doPasswordsMatch(password, confirmPassword);
 
         String encodedPassword = encodePassword(password);
@@ -70,7 +70,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(() -> new UserNotFoundException("User with id " + id + " does not exist"));
     }
 
-
     @Override
     public User findUserByEmail(String email) throws UserNotFoundException {
         return userRepository.findUserByEmail(email)
@@ -83,10 +82,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    private void validateUser(String email) throws UserExistsException {
+    private void validateUser(String email, String phoneNumber) throws UserExistsException {
         Optional<User> userByEmail = userRepository.findUserByEmail(email);
         if (userByEmail.isPresent()){
             throw new UserExistsException("A user with this email already exists");
+        }
+
+        Optional<User> userByPhoneNumber = userRepository.findUserByPhoneNumber(phoneNumber);
+        if (userByPhoneNumber.isPresent()){
+            throw new UserExistsException("A user with this phone number already exists");
         }
     }
 
