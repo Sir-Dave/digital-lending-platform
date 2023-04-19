@@ -1,0 +1,22 @@
+server:
+  error:
+    include-message: always
+
+spring:
+  datasource:
+    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
+    username: user
+    password: password
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format-sql: true
+
+jwt:
+  secret: '[a-zA-Z0-9._]^*$JwtSecretForDigitalLendingPlatformBackendAndOtherSymbols'
